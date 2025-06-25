@@ -1,8 +1,9 @@
 # 📘 Todo List
 
+![CI](https://github.com/KVOTHE73/todo-list/actions/workflows/ci.yml/badge.svg?branch=main)
+
 Una aplicación moderna y elegante construida con **Vue 3**. Permite gestionar tareas con funciones avanzadas como filtros, traducción en tiempo real, modo oscuro/claro y reordenamiento visual, además de todas las funciones CRUD (creación, edición, actualización y eliminado de tareas). Este proyecto forma parte de mi portfolio y está diseñado para mostrar una implementación profesional de un componente Vue autocontenible.
 
-![CI](https://github.com/KVOTHE73/todo-list/actions/workflows/ci.yml/badge.svg)
 ![GitHub repo size](https://img.shields.io/github/repo-size/KVOTHE73/todo-list)
 ![GitHub last commit](https://img.shields.io/github/last-commit/KVOTHE73/todo-list)
 ![GitHub license](https://img.shields.io/github/license/KVOTHE73/todo-list)
