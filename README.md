@@ -22,7 +22,19 @@ Una aplicación moderna y elegante de tareas construida con **Vue 3**. Permite g
 
 ## 🗂️ Estructura principal
 
-<pre lang="md"><code>## 🗂️ Estructura principal ``` src/ ├── components/ │ └── TodoList.vue # Componente principal de tareas ├── assets/ │ └── flags/ # Banderas de idiomas ├── locales/ │ ├── en.json │ └── es.json ├── App.vue # Componente raíz ├── main.ts # Punto de entrada └── ... ``` </code></pre>
+```
+src/
+├── components/
+│   └── TodoList.vue     # Componente principal de tareas
+├── assets/
+│   └── flags/           # Banderas de idiomas
+├── locales/
+│   ├── en.json
+│   └── es.json
+├── App.vue              # Componente raíz
+├── main.ts              # Punto de entrada
+└── ...
+```
 
 ---
 
