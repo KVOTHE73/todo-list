@@ -19,7 +19,7 @@ Una aplicación moderna y elegante construida con **Vue 3**. Permite gestionar t
 - [vue-i18n](https://github.com/markedjs/marked) — Sistema de traducciones dinámico
 - [localStorage API](https://highlightjs.org/) — Persistencia de datos
 - [tailwind](https://tailwindcss.com/) + CSS puro con variables para tema claro/oscuro
-- [vitest](https://vitest.dev/) - Tests unitarios
+- [vitest](https://vitest.dev/) - Tests unitarios del componente
 
 ---
 
