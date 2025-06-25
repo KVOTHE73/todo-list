@@ -159,7 +159,11 @@
 
     <!-- 🧹 Limpiar completadas -->
     <div class="clear-section">
-      <button @click="clearCompleted" :aria-label="t('buttons.clearCompleted')">
+      <button
+        @click="clearCompleted"
+        :aria-label="t('buttons.clearCompleted')"
+        :title="t('buttons.clearCompleted')"
+      >
         {{ t("buttons.clearCompleted") }}
       </button>
     </div>
