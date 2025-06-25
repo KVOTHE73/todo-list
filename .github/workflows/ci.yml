@@ -23,4 +23,4 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npx vitest run --reporter=dot
+        run: npx vitest run --reporter=verbose
