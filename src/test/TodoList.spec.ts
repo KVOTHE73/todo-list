@@ -3,6 +3,12 @@ import { render, fireEvent, screen } from "@testing-library/vue";
 import TodoList from "../components/TodoList.vue";
 import { createI18n } from "vue-i18n";
 
+import { vi } from "vitest";
+
+// Mock de assets para que no fallen los imports de imágenes
+vi.mock("../assets/flags/es.png", () => ({ default: "" }));
+vi.mock("../assets/flags/en.png", () => ({ default: "" }));
+
 // Mensajes para i18n en tests
 function defaultMessages() {
   return {
