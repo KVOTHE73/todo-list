@@ -9,6 +9,7 @@ export default defineConfig(({ command }) => ({
     globals: true,
     environment: "jsdom", // simula el DOM
     include: ["src/**/*.spec.ts", "src/**/*.test.ts"], // busca tests en todo src/
+    setupFiles: ["src/test/setup.ts"], // archivo de configuración para los tests
     coverage: {
       reporter: ["text", "lcov"],
     },
