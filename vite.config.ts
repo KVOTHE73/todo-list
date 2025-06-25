@@ -1,9 +1,7 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
 import { webcrypto } from "crypto";
 import { TextEncoder, TextDecoder } from "util";
 
-// Polyfill globalThis.crypto and crypto.hash for Vite plugin and tests
+// Polyfill WebCrypto API and required methods before any plugin import
 Object.defineProperty(globalThis, "crypto", {
   value: webcrypto as any,
   configurable: true,
@@ -26,10 +24,12 @@ Object.defineProperty(globalThis, "crypto", {
   }
   return await webcrypto.subtle.digest(algorithm, buffer);
 };
-
 // Polyfill TextEncoder/TextDecoder for esbuild invariant
 Object.defineProperty(globalThis, "TextEncoder", { value: TextEncoder });
 Object.defineProperty(globalThis, "TextDecoder", { value: TextDecoder });
+
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
 
 // https://vite.dev/config/
 export default defineConfig(({ command }) => ({
@@ -40,8 +40,6 @@ export default defineConfig(({ command }) => ({
     environment: "jsdom",
     include: ["src/**/*.spec.ts", "src/**/*.test.ts"],
     setupFiles: ["src/test/setup.ts"],
-    coverage: {
-      reporter: ["text", "lcov"],
-    },
+    coverage: { reporter: ["text", "lcov"] },
   },
 }));
