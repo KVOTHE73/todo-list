@@ -1,9 +1,7 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, fireEvent, screen } from "@testing-library/vue";
 import TodoList from "../components/TodoList.vue";
 import { createI18n } from "vue-i18n";
-
-import { vi } from "vitest";
 
 // Mock de assets para que no fallen los imports de imágenes
 vi.mock("../assets/flags/es.png", () => ({ default: "" }));
@@ -18,10 +16,6 @@ function defaultMessages() {
         add: "Add",
         clearCompleted: "Clear completed",
         toggleTheme: "Toggle theme",
-        edit: "Edit",
-        remove: "Remove",
-        save: "Save",
-        cancel: "Cancel",
       },
       filters: { all: "All", active: "Active", completed: "Completed" },
       lang: { es: "Español", en: "English" },
@@ -33,10 +27,6 @@ function defaultMessages() {
         add: "Añadir",
         clearCompleted: "Borrar completadas",
         toggleTheme: "Cambiar tema",
-        edit: "Editar",
-        remove: "Eliminar",
-        save: "Guardar",
-        cancel: "Cancelar",
       },
       filters: { all: "Todas", active: "Activas", completed: "Completadas" },
       lang: { es: "Español", en: "Inglés" },
@@ -75,10 +65,8 @@ describe("TodoList.vue", () => {
     await fireEvent.click(screen.getByText("➕"));
     await fireEvent.update(input, "Task 2");
     await fireEvent.click(screen.getByText("➕"));
-    // marcar la primera como completada
     const checkboxes = screen.getAllByRole("checkbox");
     await fireEvent.click(checkboxes[0]);
-    // aplica filtro "Active"
     await fireEvent.click(screen.getByText("Active"));
     expect(screen.queryByText("Task 1")).toBeNull();
     expect(screen.getByText("Task 2")).toBeTruthy();
