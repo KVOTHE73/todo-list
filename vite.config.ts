@@ -2,11 +2,10 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 
 // https://vite.dev/config/
-export default defineConfig(({ command, mode }) => {
-  const isTest = mode === "test";
+export default defineConfig(({ command }) => {
   return {
     base: command === "build" ? "/todo-list/" : "/",
-    plugins: isTest ? [] : [vue()],
+    plugins: [vue()],
     test: {
       globals: true,
       environment: "jsdom",
