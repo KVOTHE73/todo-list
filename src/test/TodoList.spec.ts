@@ -3,8 +3,7 @@ import { render, fireEvent, screen } from "@testing-library/vue";
 import TodoList from "../components/TodoList.vue";
 import { createI18n } from "vue-i18n";
 
-// Setup i18n for tests
-defaultMessages();
+// Mensajes para i18n en tests
 function defaultMessages() {
   return {
     en: {
@@ -13,8 +12,14 @@ function defaultMessages() {
         add: "Add",
         clearCompleted: "Clear completed",
         toggleTheme: "Toggle theme",
+        edit: "Edit",
+        remove: "Remove",
+        save: "Save",
+        cancel: "Cancel",
       },
       filters: { all: "All", active: "Active", completed: "Completed" },
+      lang: { es: "Español", en: "English" },
+      reorder: "Reorder",
     },
     es: {
       placeholders: { newTask: "Nueva tarea..." },
@@ -22,14 +27,21 @@ function defaultMessages() {
         add: "Añadir",
         clearCompleted: "Borrar completadas",
         toggleTheme: "Cambiar tema",
+        edit: "Editar",
+        remove: "Eliminar",
+        save: "Guardar",
+        cancel: "Cancelar",
       },
       filters: { all: "Todas", active: "Activas", completed: "Completadas" },
+      lang: { es: "Español", en: "Inglés" },
+      reorder: "Reordenar",
     },
   };
 }
 
 function renderComponent() {
   const i18n = createI18n({
+    legacy: false,
     locale: "en",
     fallbackLocale: "en",
     messages: defaultMessages(),
@@ -57,10 +69,10 @@ describe("TodoList.vue", () => {
     await fireEvent.click(screen.getByText("➕"));
     await fireEvent.update(input, "Task 2");
     await fireEvent.click(screen.getByText("➕"));
-    // mark first task completed
-    const checkbox = screen.getAllByRole("checkbox")[0];
-    await fireEvent.click(checkbox);
-    // switch to Active filter
+    // marcar la primera como completada
+    const checkboxes = screen.getAllByRole("checkbox");
+    await fireEvent.click(checkboxes[0]);
+    // aplica filtro "Active"
     await fireEvent.click(screen.getByText("Active"));
     expect(screen.queryByText("Task 1")).toBeNull();
     expect(screen.getByText("Task 2")).toBeTruthy();
