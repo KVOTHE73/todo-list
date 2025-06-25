@@ -1,12 +1,11 @@
-// setup.ts: Provide Web Crypto API in tests
 import { webcrypto } from "crypto";
+import { TextEncoder, TextDecoder } from "util";
 
 declare global {
-  // Override global crypto type
   var crypto: Crypto;
 }
 
-// Override read-only globalThis.crypto with Node WebCrypto API
+// Polyfill globalThis.crypto for both Vite plugin and tests
 Object.defineProperty(globalThis, "crypto", {
   value: webcrypto,
   configurable: true,
@@ -16,9 +15,8 @@ Object.defineProperty(globalThis, "crypto", {
 // Polyfill crypto.hash used by @vitejs/plugin-vue
 (globalThis.crypto as any).hash = async (
   algorithm: string,
-  data: Buffer | string
+  data: Buffer | ArrayBuffer | string
 ) => {
-  // Convert string to ArrayBuffer
   let buffer: ArrayBuffer;
   if (typeof data === "string") {
     buffer = new TextEncoder().encode(data);
@@ -32,3 +30,7 @@ Object.defineProperty(globalThis, "crypto", {
   }
   return await webcrypto.subtle.digest(algorithm, buffer);
 };
+
+// Polyfill TextEncoder/TextDecoder for esbuild invariant
+Object.defineProperty(globalThis, "TextEncoder", { value: TextEncoder });
+Object.defineProperty(globalThis, "TextDecoder", { value: TextDecoder });

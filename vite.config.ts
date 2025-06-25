@@ -1,15 +1,45 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import { webcrypto } from "crypto";
+import { TextEncoder, TextDecoder } from "util";
+
+// Polyfill globalThis.crypto and crypto.hash for Vite plugin and tests
+Object.defineProperty(globalThis, "crypto", {
+  value: webcrypto as any,
+  configurable: true,
+  writable: false,
+});
+(globalThis.crypto as any).hash = async (
+  algorithm: string,
+  data: Buffer | ArrayBuffer | string
+) => {
+  let buffer: ArrayBuffer;
+  if (typeof data === "string") {
+    buffer = new TextEncoder().encode(data);
+  } else if (Buffer.isBuffer(data)) {
+    buffer = data.buffer.slice(
+      data.byteOffset,
+      data.byteOffset + data.byteLength
+    );
+  } else {
+    buffer = data;
+  }
+  return await webcrypto.subtle.digest(algorithm, buffer);
+};
+
+// Polyfill TextEncoder/TextDecoder for esbuild invariant
+Object.defineProperty(globalThis, "TextEncoder", { value: TextEncoder });
+Object.defineProperty(globalThis, "TextDecoder", { value: TextDecoder });
 
 // https://vite.dev/config/
 export default defineConfig(({ command }) => ({
-  base: command === "build" ? "/todo-list/" : "/", // para el build y el despliegue en GitHub Pages /todo-list/
+  base: command === "build" ? "/todo-list/" : "/",
   plugins: [vue()],
   test: {
     globals: true,
-    environment: "jsdom", // simula el DOM
-    include: ["src/**/*.spec.ts", "src/**/*.test.ts"], // busca tests en todo src/
-    setupFiles: ["src/test/setup.ts"], // archivo de configuración para los tests
+    environment: "jsdom",
+    include: ["src/**/*.spec.ts", "src/**/*.test.ts"],
+    setupFiles: ["src/test/setup.ts"],
     coverage: {
       reporter: ["text", "lcov"],
     },
